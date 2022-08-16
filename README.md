@@ -13,6 +13,7 @@ We have created a simple page for a restaurant owner to view reservations and so
 1. Identify any places where you think the existing code could be improved and make the appropriate changes. These can be any type of improvements you notice: related to performance, maintainability, accessibility, or anything else. You may have to refactor some parts in order to make the code easier to read.
 
 Although proper testing and internationalization are very important to us at Quandoo, they are out of the scope of this interview task, and you don't need to consider these in your solution.
+
 2. Add a new feature to this app: Allow the user to filter the reservations by status. We have already added the status checkboxes, but these currently have no functionality. We don't expect you to modify any of the CSS or styling, unless it is necessary for your solution.
 
 The mock reservation data is found in `reservations.json`. The structure of a reservation is as follows:
