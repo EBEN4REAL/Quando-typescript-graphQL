@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Reservation, RESERVATIONS, Status } from './reservations';
 import styled from 'styled-components';
-import ReservationCard from './components/ReservationCard';
+import { format } from 'date-fns';
+import mockReservations from "./mockReservations.json";
 
 const Container = styled.div`
   margin: 100px auto auto auto;
@@ -44,39 +44,70 @@ const FilterLabel = styled.label`
   }
 `;
 
-enum SortingFields {
-  STARTS_AT = 'Starts at',
-  GUEST_COUNT = 'Guest count',
-  GUEST_FIRST_NAME = 'Guest first name',
-  GUEST_LAST_NAME = 'Guest last name',
-}
+const Card = styled.div`
+  border: 1px slategrey solid;
+  border-radius: 6px;
+  margin: 16px 8px;
+  box-shadow: rgb(51 51 51 / 10%) 0px 1px 4px;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(247, 248, 250);
+`;
 
-const getSortField = (field: SortingFields | undefined, reservation: Reservation) => {
-  if (field === SortingFields.STARTS_AT) {
+const DetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 24px;
+`;
+
+const StatusContainer = styled.div<{ backgroundColor: string; textColor: string }>`
+  margin-left: 24px;
+  background-color: ${(props) => props.backgroundColor};
+  color: ${(props) => props.textColor};
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  align-self: self-start;
+  text-transform: uppercase;
+`;
+
+const GuestName = styled.p`
+  font-weight: bold;
+  font-size: 20px;
+`;
+
+const getSortField = (field: any, reservation: any) => {
+  if (field === 'Starts at') {
     return reservation.startsAt;
   }
-  if (field === SortingFields.GUEST_COUNT) {
+  if (field === 'Guest count') {
     return reservation.guestCount;
   }
-  if (field === SortingFields.GUEST_FIRST_NAME) {
+  if (field === 'Guest first name') {
     return reservation.guest.firstName;
   }
   return reservation.guest.lastName;
 };
 
 function App() {
-  const [sortField, setSortField] = useState<SortingFields>();
-  const [sortedReservations, setSortedReservations] = useState<Reservation[]>([]);
 
-  useEffect(() => setSortField(SortingFields.STARTS_AT), []);
+  const [sortField, setSortField] = useState<any>();
 
-  useEffect(() => {
-    setSortedReservations(
-      [...RESERVATIONS].sort((a, b) => {
-        return getSortField(sortField, a) < getSortField(sortField, b) ? -1 : 1;
-      })
-    );
-  }, [sortField]);
+  useEffect(() => setSortField('Starts at'), []);
+
+  const getBadgeColor = (status: any): { background: string; text: string } => {
+    switch (status) {
+      case 'Checked-in':
+        return { background: 'rgb(200, 250, 221)', text: 'rgb(0, 87, 96)' };
+      case 'Cancelled':
+        return { background: 'rgb(253, 222, 212)', text: 'rgb(130, 14, 61)' };
+      default:
+        return { background: 'rgb(207, 239, 252)', text: 'rgb(7, 45, 113)' };
+    }
+  };
 
   return (
     <Container>
@@ -86,24 +117,51 @@ function App() {
           <label>
             <strong>Sort by</strong>:
           </label>
-          <SortFieldSelect id="sortFieldSelector" onChange={(e) => setSortField(e.target.value as SortingFields)}>
-            {Object.values(SortingFields).map((field) => (
-              <option value={field}>{field}</option>
-            ))}
+          <SortFieldSelect id="sortFieldSelector" onChange={(e) => setSortField(e.target.value)}>
+            <option value="Starts at">Starts at</option>
+            <option value="Guest count">Guest count</option>
+            <option value="Guest first name">Guest first name</option>
+            <option value="Guest last name">Guest last name</option>
           </SortFieldSelect>
         </div>
         <div>
           <strong>With status</strong>:
-          {Object.values(Status).map((status) => (
-            <FilterLabel>
-              <input type="checkbox" value={status} checked={true} id={`checkbox_${status}`} />
-              {status}
-            </FilterLabel>
-          ))}
+          <FilterLabel>
+            <input type="checkbox" value="Upcoming" checked={true} id="checkbox_Upcoming" />
+            Upcoming
+          </FilterLabel>
+          <FilterLabel>
+            <input type="checkbox" value="Cancelled" checked={true} id="checkbox_Cancelled" />
+            Cancelled
+          </FilterLabel>
+          <FilterLabel>
+            <input type="checkbox" value="Checked-in" checked={true} id="checkbox_Checked-in" />
+            Checked-in
+          </FilterLabel>
+          <FilterLabel>
+            <input type="checkbox" value="Checked-out" checked={true} id="checkbox_Checked-out" />
+            Checked-out
+          </FilterLabel>
         </div>
       </OptionsContainer>
-      {sortedReservations.map((reservation, index) => {
-        return <ReservationCard reservation={reservation} key={index} />;
+      {[...mockReservations.reservations].sort((a, b) => getSortField(sortField, a) < getSortField(sortField, b) ? -1 : 1).map((reservation, index) => {
+        const { background, text } = getBadgeColor(reservation.status);
+        return (
+          <Card key={index}>
+            <DetailsContainer>
+              <div>
+                Starts at: <strong>{format(new Date(reservation.startsAt), 'd MMM, HH:mm')}</strong>
+              </div>
+              <div>
+                Guest count: <strong>{reservation.guestCount}</strong>
+              </div>
+            </DetailsContainer>
+            <GuestName>{`${reservation.guest.firstName} ${reservation.guest.lastName}`}</GuestName>
+            <StatusContainer backgroundColor={background} textColor={text}>
+              {reservation.status}
+            </StatusContainer>
+          </Card>
+        );
       })}
     </Container>
   );
