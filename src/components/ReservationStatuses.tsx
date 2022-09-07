@@ -2,12 +2,10 @@ import { reservationStatuses } from "../Constants";
 import * as Styled from "../components/StyledComponents/Reservations.styled";
 
 interface Props {
-    onChangeStatus: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeStatus: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ReservationStatuses = ({
-    onChangeStatus
-}: Props) => {
+const ReservationStatuses = ({ onChangeStatus }: Props) => {
   const renderStatuses = (): JSX.Element[] => {
     return reservationStatuses.map((status) => (
       <Styled.FilterLabel key={status.id}>

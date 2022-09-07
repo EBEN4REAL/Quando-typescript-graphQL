@@ -1,8 +1,8 @@
 import { Reservation } from "../Types";
 
-interface Data  {
+interface Data {
   reservations: Reservation[];
-};
+}
 
 export async function getReservations() {
   const result = await getData("/mockReservations.json");

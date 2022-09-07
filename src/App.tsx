@@ -15,7 +15,8 @@ function App() {
   const [sortField, setSortField] = useState<string>("Starts at");
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loader, setLoader] = useState<boolean>(true);
-  const [statuses, setStatus] = useState<ReservationStatus[]>(reservationStatuses);
+  const [statuses, setStatus] =
+    useState<ReservationStatus[]>(reservationStatuses);
 
   useEffect(() => {
     getReservations().then((reservations) => {
@@ -26,9 +27,10 @@ function App() {
 
   const filteredReservationList = useMemo(() => {
     const clonedReservations = [...reservations];
-    const clonedStatuses = [...statuses]
+    const clonedStatuses = [...statuses];
 
     let filteredReservations: Reservation[] = [];
+
     clonedStatuses.forEach((status) => {
       filteredReservations.push(
         ...clonedReservations.filter((reservation) => {
@@ -48,10 +50,8 @@ function App() {
       getSortField(sortField, a) < getSortField(sortField, b) ? -1 : 1
     );
 
-    return computedReservations
-
+    return computedReservations;
   }, [reservations, sortField, statuses]);
-
 
   const renderReservations = (): JSX.Element[] => {
     return filteredReservationList.map((reservation: Reservation) => {
@@ -62,9 +62,11 @@ function App() {
   const changeStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = e;
     const clonedStatusArr = [...statuses];
+
     const statusIndex = clonedStatusArr.findIndex(
       (status) => status.value === target.value
     );
+
     clonedStatusArr[statusIndex].checked =
       !clonedStatusArr[statusIndex].checked;
 

@@ -4,12 +4,10 @@ import { SortField } from "../Types";
 import * as Styled from "../components/StyledComponents/Reservations.styled";
 
 interface Props {
-    onSortFieldChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onSortFieldChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const SortFields = ({
-  onSortFieldChange,
-}: Props) => {
+const SortFields = ({ onSortFieldChange }: Props) => {
   const renderSortFields = (): JSX.Element[] => {
     return sortFields.map((sortField: SortField) => (
       <option value={sortField.value} key={sortField.id}>

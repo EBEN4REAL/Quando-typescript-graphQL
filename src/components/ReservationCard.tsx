@@ -1,4 +1,4 @@
-import { Reservation } from '../Types';
+import { Reservation } from "../Types";
 import { format } from "date-fns";
 import { getBadgeColor } from "../utils";
 import * as Styled from "./StyledComponents/ReservationCard.styled";
@@ -7,9 +7,7 @@ interface Props {
   reservation: Reservation;
 }
 
-const ReservationCard = ({
-  reservation
-}: Props) => {
+const ReservationCard = ({ reservation }: Props) => {
   const { background, text } = getBadgeColor(reservation.status);
 
   return (
