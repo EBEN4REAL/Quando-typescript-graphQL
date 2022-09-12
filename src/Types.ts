@@ -11,14 +11,14 @@ export interface Reservation  {
   table: Table;
 };
 
-interface Guest  {
+type Guest =   {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
 };
 
-interface Table  {
+type Table =  {
   id: string;
   name: string;
 };
