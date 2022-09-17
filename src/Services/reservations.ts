@@ -4,8 +4,8 @@ interface Data {
   reservations: Reservation[];
 }
 
-export async function getReservations() {
-  const result = await getData("/mockReservations.json");
+export async function getReservations(endPoint: string) {
+  const result = await getData(endPoint);
   return result.reservations;
 }
 
@@ -18,3 +18,6 @@ function getData(endpoint: string): Promise<Data> {
     }, 500);
   });
 }
+
+
+

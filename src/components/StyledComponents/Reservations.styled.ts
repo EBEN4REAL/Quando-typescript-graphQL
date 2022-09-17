@@ -28,7 +28,7 @@ export const OptionsContainer = styled.div`
     border-radius: 6px;
 
     div {
-    margin: 20px 15px;
+        margin: 20px 15px;
     }
 `;
 

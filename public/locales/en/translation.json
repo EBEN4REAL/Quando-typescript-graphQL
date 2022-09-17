@@ -1,0 +1,11 @@
+{
+    "greeting": "Hello",
+    "text": "Thank you for visiting our website.",
+    "language": "Language",
+    "reservationHeader": "Reservations List",
+    "sortBy": "Sort by",
+    "withStatus": "With status",
+    "startAt": "Start at",
+    "guestCount": "Guest count",
+    "UPCOMING": "UPCOMING"
+}
