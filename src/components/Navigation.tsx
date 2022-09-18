@@ -21,7 +21,7 @@ function Navigation () {
         <Navbar.Brand href="#">Language preferences</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className={locale === 'en' ? 'ms-auto' : 'me-auto'}>
             <NavDropdown title={t('language')} id="basic-nav-dropdown">
               <NavDropdown.Item href="#" onClick={() => changeLocale('en')}>English</NavDropdown.Item>
               <NavDropdown.Item href="#" onClick={() => changeLocale('ar')}>العربية</NavDropdown.Item>

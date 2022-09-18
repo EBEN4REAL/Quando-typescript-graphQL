@@ -18,6 +18,8 @@ import Navigation from './components/Navigation';
 import i18n from './i18n';
 import LocaleContext from "./LocaleContext"
 import { useTranslation } from "react-i18next";
+import { ThemeProvider } from "react-bootstrap";
+import {Helmet} from "react-helmet"
 
 function App() {
   const [locale, setLocale] = useState(i18n.language);
@@ -90,6 +92,7 @@ function App() {
   return (
     <Styled.Container>
       <LocaleContext.Provider value={{locale, setLocale}}>
+        <ThemeProvider dir={locale === 'en' ? 'ltr' : 'rtl'}>
           <Suspense fallback={<Loading />}>
             <Styled.Header>{t("reservationHeader")}</Styled.Header>
             <Navigation />
@@ -109,7 +112,13 @@ function App() {
           {!loader && renderReservations()}
 
           {loader && <LoadingIcon />}
+
+          <Helmet htmlAttributes={{
+            lang: locale,
+            dir: locale === 'en' ? 'ltr' : 'rtl'
+          }} />
           </Suspense>
+        </ThemeProvider>
       </LocaleContext.Provider>
     </Styled.Container>
   );
