@@ -7,6 +7,9 @@
     "withStatus": "صنف حسب",
     "startAt": "يبدأ عند",
     "guestCount": "عدد الضيوف",
-    "UPCOMING": "يبدأ عند"
+    "upcoming": "القادمة",
+    "cancelled": "ألغيت",
+    "checked-in": "فحص في",
+    "checked-out": "فحصت"
 }
   

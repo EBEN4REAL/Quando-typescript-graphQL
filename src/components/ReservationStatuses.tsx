@@ -22,7 +22,7 @@ const ReservationStatuses = ({ onChangeStatus }: Props) => {
             onChangeStatus(event)
           }
         />
-        {t(status.value)}
+        {t(status.value.toLowerCase())}
       </Styled.FilterLabel>
     ));
   };

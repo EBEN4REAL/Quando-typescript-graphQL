@@ -7,5 +7,8 @@
     "withStatus": "With status",
     "startAt": "Start at",
     "guestCount": "Guest count",
-    "UPCOMING": "UPCOMING"
+    "upcoming": "UPCOMING",
+    "cancelled": "Cancelled",
+    "checked-in": "Checked-in",
+    "checked-out": "Checked-out"
 }

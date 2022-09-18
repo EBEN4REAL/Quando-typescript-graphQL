@@ -28,7 +28,7 @@ const ReservationCard = ({ reservation }: Props) => {
       </Styled.DetailsContainer>
       <Styled.GuestName>{`${reservation.guest.firstName} ${reservation.guest.lastName}`}</Styled.GuestName>
       <Styled.StatusContainer backgroundColor={background} textColor={text}>
-        {reservation.status}
+        {t(reservation.status.toLowerCase())}
       </Styled.StatusContainer>
     </Styled.Card>
   );
