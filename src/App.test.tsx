@@ -11,7 +11,7 @@ import { getReservations } from "./Services/reservations";
 
 jest.mock("axios");
 
-// const mockedAxios = axios as jest.Mocked<typeof axios>;
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 const renderStatuses = () => {
   const defaultProps = {
@@ -36,7 +36,7 @@ describe("App component", () => {
   });
 
   it("Renders reservation cards", () => {
-    const sampleReservation = {
+    const sampleReservation: Reservation = {
       id: "28e4dd4e-0204-415c-bc31-3777cd886f36",
       guest: {
         id: "20c77eca-6739-40a6-b39e-a34d8a329ba5",
