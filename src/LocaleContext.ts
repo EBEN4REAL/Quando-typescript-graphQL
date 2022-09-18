@@ -2,9 +2,7 @@ import React from "react";
 
 const defaultValue = {
   locale: 'en',
-  setLocale: (locale: any) => {
-    
-  } 
+  setLocale: (lang: string) => {} 
 }
 
 export default React.createContext(defaultValue);
