@@ -11,7 +11,7 @@ import { getReservations } from "./Services/reservations";
 
 jest.mock("axios");
 
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+// const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 const renderStatuses = () => {
   const defaultProps = {

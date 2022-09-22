@@ -11,15 +11,15 @@ import * as Styled from "./components/StyledComponents/Reservations.styled";
 import ReservationStatuses from "./components/ReservationStatuses";
 import SortFields from "./components/sortFields";
 
-/** i18n */ 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Loading from './components/Loading';
-import Navigation from './components/Navigation';
-import i18n from './i18n';
-import LocaleContext from "./LocaleContext"
+/** i18n */
+import "bootstrap/dist/css/bootstrap.min.css";
+import Loading from "./components/Loading";
+import Navigation from "./components/Navigation";
+import i18n from "./i18n";
+import LocaleContext from "./LocaleContext";
 import { useTranslation } from "react-i18next";
 import { ThemeProvider } from "react-bootstrap";
-import {Helmet} from "react-helmet"
+import { Helmet } from "react-helmet";
 
 function App() {
   const [locale, setLocale] = useState(i18n.language);
@@ -36,10 +36,9 @@ function App() {
     });
   }, []);
 
-  i18n.on('languageChanged', (lng) => setLocale(i18n.language));
+  i18n.on("languageChanged", (lng) => setLocale(i18n.language));
 
   const { t } = useTranslation();
-
 
   const filteredReservationList = useMemo(() => {
     const clonedReservations = [...reservations];
@@ -49,11 +48,9 @@ function App() {
 
     clonedStatuses.forEach((status) => {
       filteredReservations.push(
-        ...clonedReservations.filter((reservation) => {
-          if (status.checked) {
-            return reservation.status === status.value;
-          }
-        })
+        ...clonedReservations.filter((reservation) =>
+          status.checked ? reservation.status === status.value : null
+        )
       );
     });
 
@@ -63,7 +60,7 @@ function App() {
         : clonedReservations;
 
     const computedReservations = sortableReservations.sort((a, b) =>
-      getSortField(sortField, a) < getSortField(sortField, b) ? -1 : 1
+      getSortField<string, Reservation>(sortField, a) < getSortField(sortField, b) ? -1 : 1
     );
 
     return computedReservations;
@@ -91,32 +88,36 @@ function App() {
 
   return (
     <Styled.Container>
-      <LocaleContext.Provider value={{locale, setLocale}}>
-        <ThemeProvider dir={locale === 'en' ? 'ltr' : 'rtl'}>
+      <LocaleContext.Provider value={{ locale, setLocale }}>
+        <ThemeProvider dir={locale === "en" ? "ltr" : "rtl"}>
           <Suspense fallback={<Loading />}>
             <Styled.Header>{t("reservationHeader")}</Styled.Header>
             <Navigation />
             <Styled.OptionsContainer>
-            <div>
-              <label>
-                <strong>{t("sortBy")}</strong>:
-              </label>
-              <SortFields onSortFieldChange={(e) => setSortField(e.target.value)} />
-            </div>
-            <div>
-              <strong>{t("withStatus")}</strong>:
-              <ReservationStatuses onChangeStatus={changeStatus} />
-            </div>
-          </Styled.OptionsContainer>
+              <div>
+                <label>
+                  <strong>{t("sortBy")}</strong>:
+                </label>
+                <SortFields
+                  onSortFieldChange={(e) => setSortField(e.target.value)}
+                />
+              </div>
+              <div>
+                <strong>{t("withStatus")}</strong>:
+                <ReservationStatuses onChangeStatus={changeStatus} />
+              </div>
+            </Styled.OptionsContainer>
 
-          {!loader && renderReservations()}
+            {!loader && renderReservations()}
 
-          {loader && <LoadingIcon />}
+            {loader && <LoadingIcon />}
 
-          <Helmet htmlAttributes={{
-            lang: locale,
-            dir: locale === 'en' ? 'ltr' : 'rtl'
-          }} />
+            <Helmet
+              htmlAttributes={{
+                lang: locale,
+                dir: locale === "en" ? "ltr" : "rtl",
+              }}
+            />
           </Suspense>
         </ThemeProvider>
       </LocaleContext.Provider>

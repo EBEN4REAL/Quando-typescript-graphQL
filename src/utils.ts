@@ -1,17 +1,23 @@
 import { Reservation }  from "./Types"
 
+const enum Fields  {
+  startsAt = "Starts at",
+  guestCount = "Guest count",
+  firstName = "Guest first name",
+  lastName = "Guest last name"
+}
 
-export const getSortField = (field: string, reservation: Reservation) => {
-    if (field === 'Starts at') {
+export const getSortField = <T extends string, K extends Reservation>(field: T , reservation: K): string | number => {
+  switch (field) {
+    case Fields.startsAt:
       return reservation.startsAt;
-    }
-    if (field === 'Guest count') {
+    case Fields.guestCount:
       return reservation.guestCount;
-    }
-    if (field === 'Guest first name') {
+    case Fields.firstName:
       return reservation.guest.firstName;
-    }
-    return reservation.guest.lastName;
+    default:
+      return reservation.guest.lastName;
+  }
 };
   
 export  const getBadgeColor = (status: string): { background: string; text: string } => {

@@ -9,8 +9,6 @@ interface Props {
   onSortFieldChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-
-
 const SortFields = ({ onSortFieldChange }: Props) => {
   const { t } = useTranslation()
 
