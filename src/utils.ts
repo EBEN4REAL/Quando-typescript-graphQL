@@ -1,13 +1,13 @@
 import { Reservation }  from "./Types"
 
-const enum Fields  {
+enum Fields  {
   startsAt = "Starts at",
   guestCount = "Guest count",
   firstName = "Guest first name",
   lastName = "Guest last name"
 }
 
-export const getSortField = <T extends string, K extends Reservation>(field: T , reservation: K): string | number => {
+export const getSortField = <T extends string, K extends Reservation<number, string>>(field: T , reservation: K): string | number => {
   switch (field) {
     case Fields.startsAt:
       return reservation.startsAt;

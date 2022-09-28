@@ -1,7 +1,7 @@
 import { Reservation } from "../Types";
 
 interface Data {
-  reservations: Reservation[];
+  reservations: Reservation<number, string>[];
 }
 
 export async function getReservations(endPoint: string) {

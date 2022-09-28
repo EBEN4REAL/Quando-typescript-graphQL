@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import App from "./App";
 import ReservationCard from "./components/ReservationCard";
-import axios from "axios";
 import mockedReservations from "../public/mockReservations.json";
 import { Reservation } from "./Types";
 import ReservationStatuses from "./components/ReservationStatuses";
@@ -36,7 +35,7 @@ describe("App component", () => {
   });
 
   it("Renders reservation cards", () => {
-    const sampleReservation: Reservation = {
+    const sampleReservation: Reservation<number, string> = {
       id: "28e4dd4e-0204-415c-bc31-3777cd886f36",
       guest: {
         id: "20c77eca-6739-40a6-b39e-a34d8a329ba5",

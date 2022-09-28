@@ -5,7 +5,7 @@ import * as Styled from "./StyledComponents/ReservationCard.styled";
 import { useTranslation } from "react-i18next";
 
 interface Props {
-  reservation: Reservation;
+  reservation: Reservation<number, string>;
 }
 
 const ReservationCard = ({ reservation }: Props) => {

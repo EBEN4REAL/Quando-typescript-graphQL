@@ -1,12 +1,12 @@
 
 type Status = 'Upcoming' | 'Cancelled' | 'Checked-in' | 'Checked-out'; 
 
-export interface Reservation  {
-  id: string;
+export interface Reservation<T, U>  {
+  id: U;
   guest: Guest;
-  startsAt: string;
-  endsAt: string;
-  guestCount: number;
+  startsAt: U;
+  endsAt: U;
+  guestCount: T;
   status: Status;
   table: Table;
 };
@@ -20,7 +20,7 @@ type Guest =   {
 
 type Table =  {
   id: string;
-  name: string;
+  name: string
 };
 
 export interface ReservationStatus  {

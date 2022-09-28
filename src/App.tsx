@@ -21,13 +21,30 @@ import { useTranslation } from "react-i18next";
 import { ThemeProvider } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 
+/** GraphQL */
+import { 
+  ApolloClient, 
+  InMemoryCache, 
+  ApolloProvider, 
+  useQuery, 
+  gql 
+} from "@apollo/client"; 
+import { MOVIES } from "./Services/GraphQL/Queries"
+
+const client = new ApolloClient({ 
+  uri: 'http://localhost:4000/graphql', 
+  cache: new InMemoryCache() 
+});
+
 function App() {
   const [locale, setLocale] = useState(i18n.language);
   const [sortField, setSortField] = useState<string>("Starts at");
-  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [reservations, setReservations] = useState<Reservation<number, string>[]>([]);
   const [loader, setLoader] = useState<boolean>(true);
   const [statuses, setStatus] =
     useState<ReservationStatus[]>(reservationStatuses);
+
+  const { loading, error, data } = useQuery(MOVIES);
 
   useEffect(() => {
     getReservations("/mockReservations.json").then((reservations) => {
@@ -44,7 +61,7 @@ function App() {
     const clonedReservations = [...reservations];
     const clonedStatuses = [...statuses];
 
-    let filteredReservations: Reservation[] = [];
+    let filteredReservations: Reservation<number, string>[] = [];
 
     clonedStatuses.forEach((status) => {
       filteredReservations.push(
@@ -60,14 +77,14 @@ function App() {
         : clonedReservations;
 
     const computedReservations = sortableReservations.sort((a, b) =>
-      getSortField<string, Reservation>(sortField, a) < getSortField(sortField, b) ? -1 : 1
+      getSortField<string, Reservation<number, string>>(sortField, a) < getSortField(sortField, b) ? -1 : 1
     );
 
     return computedReservations;
   }, [reservations, sortField, statuses]);
 
   const renderReservations = (): JSX.Element[] => {
-    return filteredReservationList.map((reservation: Reservation) => {
+    return filteredReservationList.map((reservation: Reservation<number, string>) => {
       return <ReservationCard key={reservation.id} reservation={reservation} />;
     });
   };
